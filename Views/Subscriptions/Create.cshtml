@@ -1,0 +1,61 @@
+﻿@model NWC.DAL.Entity.Subscription
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Subscription</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SubscriberId" class="control-label">Subscriber Id</label>
+                <input asp-for="SubscriberId" class="form-control" />
+                <span asp-validation-for="SubscriberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Unit_No" class="control-label"></label>
+                <input asp-for="Unit_No" class="form-control" />
+                <span asp-validation-for="Unit_No" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealEstateTypesId" class="control-label">Real Estate Type</label>
+                <select asp-items="(SelectList)ViewBag.RealStateList" asp-for="RealEstateTypesId" class="form-control" >
+                    <option>Choose Real State Type</option>                  
+                </select>
+                <span asp-validation-for="RealEstateTypes.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsThereSanitation" /> @Html.DisplayNameFor(model => model.IsThereSanitation)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Last_Reading_Meter" class="control-label"></label>
+                <input asp-for="Last_Reading_Meter" class="form-control" />
+                <span asp-validation-for="Last_Reading_Meter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit"  value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

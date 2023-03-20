@@ -1,0 +1,33 @@
+﻿@model IEnumerable<NWC.DAL.Entity.Subscriber>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Subscribers Report</h2>
+<hr />
+
+<table class="table table-striped table-bordered">
+    <thead class="table-primary">
+        <tr>
+            <th class="text-capitalize text-center" >ID</th>
+            <th class="text-capitalize text-center" >Name</th>
+            <th class="text-capitalize text-center" >City</th>
+            <th class="text-capitalize text-center" >Area</th>
+            <th class="text-capitalize text-center" >Mobile</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-center">@item.Id</td>
+            <td class="text-center">@item.Name</td>
+            <td class="text-center">@item.City</td>
+            <td class="text-center">@item.Area</td>
+            <td class="text-center">@item.Mobile</td>
+        </tr>
+}
+    </tbody>
+</table>
+

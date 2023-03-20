@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NWC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body{
+            background-color: #F6F6F6
+        }
+        /* Scroll bar customize *//* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 8px;
+        }
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(136, 136, 136, 0.5);
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -ms-border-radius: 10px;
+            -o-border-radius: 10px;
+        }
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand"  asp-controller="Home" asp-action="Index">Water Consumption Invoice Entry</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!--
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="DefaultSliceValues" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                -->
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid p-0">
+        <div class="row w-100">
+            <div class="col-2">
+                <div class="d-flex flex-column overflow-auto p-3 bg-white h-100">
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Invoices" asp-action="Create">Create Invoice</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Subscribers" asp-action="Index">Edit Subscriber</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Subscriptions" asp-action="Index">Edit Subscriptions</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="RealEstateTypes" asp-action="Index">Edit RealEstateTypes</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Invoices" asp-action="Ask">Inquiry Invoice</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Subscribers" asp-action="Report">Subscribers Report</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Subscriptions" asp-action="Report">Subscriptions Report</a>
+                    <a class="btn btn-outline-primary text-decoration-none text-capitalize mb-3 fs-6" asp-controller="Invoices" asp-action="Report">Invoices Report</a>
+                </div>
+            </div>
+            <div class="col-10 overflow-auto p-0"  style="max-height: 80vh;min-height: 80vh">
+                <div class="card shadow-lg" style="min-height: 100%;">
+                    <div class="card-body overflow-auto h-100">
+                        <main role="main" class="pb-3">
+                             @RenderBody()
+                         </main>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - NWC 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

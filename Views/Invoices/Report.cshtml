@@ -1,0 +1,41 @@
+﻿@model IEnumerable<NWC.DAL.Entity.Invoices>
+
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Invoices Report</h2>
+<hr />
+<table class="table table-striped table-bordered " >
+    <thead class="table-primary">
+        <tr>
+            <th class="text-capitalize text-center">ID</th>
+            <th class="text-capitalize text-center">Subscription ID</th>           
+            <th class="text-capitalize text-center">Subscriber ID</th>
+            <th class="text-capitalize text-center">Name</th>
+            <th class="text-capitalize text-center">Date</th>
+            <th class="text-capitalize text-center">Prev Consum</th>
+            <th class="text-capitalize text-center">Current Consum</th>
+            <th class="text-capitalize text-center">Actual Consum</th>
+            <th class="text-capitalize text-center">Total Invoice</th>
+            <th class="text-capitalize text-center">Total Bill</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="text-center">@item.Id</td>
+            <td class="text-center">@item.Subscription.Id</td>
+            <td class="text-center">@item.Subscription.Subscriber.Id</td>
+            <td class="text-center">@item.Subscription.Subscriber.Name</td>
+            <td class="text-center">@item.Date.ToShortDateString()</td>
+            <td class="text-center">@item.Subscription.Last_Reading_Meter</td>
+            <td class="text-center">@item.CurrentConsumptionAmount</td>
+            <td class="text-center">@item.ActualConsumptionAmount</td>
+            <td class="text-center">@item.TotalInvoice</td>
+            <td class="text-center">@item.TotalBill</td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,120 @@
+﻿@model IEnumerable<NWC.DAL.Entity.Invoices>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreviousConsumptionAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentConsumptionAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualConsumptionAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsThereSanitation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsumptionValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SanitationConsumptionValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalInvoice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreviousConsumptionAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentConsumptionAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualConsumptionAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsThereSanitation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsumptionValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SanitationConsumptionValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalInvoice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalBill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,110 @@
+﻿@model NWC.DAL.Entity.Invoices
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Invoices</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="From" class="control-label"></label>
+                <input asp-for="From" class="form-control" />
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="To" class="control-label"></label>
+                <input asp-for="To" class="form-control" />
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PreviousConsumptionAmount" class="control-label"></label>
+                <input asp-for="PreviousConsumptionAmount" class="form-control" />
+                <span asp-validation-for="PreviousConsumptionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentConsumptionAmount" class="control-label"></label>
+                <input asp-for="CurrentConsumptionAmount" class="form-control" />
+                <span asp-validation-for="CurrentConsumptionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActualConsumptionAmount" class="control-label"></label>
+                <input asp-for="ActualConsumptionAmount" class="form-control" />
+                <span asp-validation-for="ActualConsumptionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceFee" class="control-label"></label>
+                <input asp-for="ServiceFee" class="form-control" />
+                <span asp-validation-for="ServiceFee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxRate" class="control-label"></label>
+                <input asp-for="TaxRate" class="form-control" />
+                <span asp-validation-for="TaxRate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsThereSanitation" /> @Html.DisplayNameFor(model => model.IsThereSanitation)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConsumptionValue" class="control-label"></label>
+                <input asp-for="ConsumptionValue" class="form-control" />
+                <span asp-validation-for="ConsumptionValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SanitationConsumptionValue" class="control-label"></label>
+                <input asp-for="SanitationConsumptionValue" class="form-control" />
+                <span asp-validation-for="SanitationConsumptionValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalInvoice" class="control-label"></label>
+                <input asp-for="TotalInvoice" class="form-control" />
+                <span asp-validation-for="TotalInvoice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxValue" class="control-label"></label>
+                <input asp-for="TaxValue" class="form-control" />
+                <span asp-validation-for="TaxValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalBill" class="control-label"></label>
+                <input asp-for="TotalBill" class="form-control" />
+                <span asp-validation-for="TotalBill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

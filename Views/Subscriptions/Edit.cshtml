@@ -1,0 +1,107 @@
+﻿@model NWC.DAL.Entity.Subscription
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Subscription</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" disabled />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Subscriber.Id" class="control-label">Subscriber Id</label>
+                <input id="subscriberId" asp-for="Subscriber.Id" class="form-control" />
+                <span asp-validation-for="Subscriber.Id" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Subscriber.Name" class="control-label"></label>
+                <input id="subscriberName" asp-for="Subscriber.Name" class="form-control" />
+                <span asp-validation-for="Subscriber.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subscriber.City" class="control-label"></label>
+                <input id="subscriberCity" asp-for="Subscriber.City" class="form-control" />
+                <span asp-validation-for="Subscriber.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subscriber.Area" class="control-label"></label>
+                <input id="subscriberArea" asp-for="Subscriber.Area" class="form-control" />
+                <span asp-validation-for="Subscriber.Area" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subscriber.Mobile" class="control-label"></label>
+                <input id="subscriberMob" asp-for="Subscriber.Mobile" class="form-control" />
+                <span asp-validation-for="Subscriber.Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Unit_No" class="control-label"></label>
+                <input asp-for="Unit_No" class="form-control" />
+                <span asp-validation-for="Unit_No" class="text-danger"></span>
+            </div>
+           <div class="form-group">
+                <label asp-for="RealEstateTypes.Name" class="control-label">Real Estate Type</label>
+                <select asp-items="(SelectList)ViewBag.RealStateList" asp-for="RealEstateTypes.Id" class="form-control" >
+                    <option>Choose Real State Type</option>                  
+                </select>
+                <span asp-validation-for="RealEstateTypes.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsThereSanitation" /> @Html.DisplayNameFor(model => model.IsThereSanitation)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Last_Reading_Meter" class="control-label"></label>
+                <input asp-for="Last_Reading_Meter" class="form-control" />
+                <span asp-validation-for="Last_Reading_Meter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+    $('#subscriberId').change(function() {
+          const idValue= $('#subscriberId').val() ;
+     
+        $.ajax({
+            type: 'POST',
+            url: '/Invoices/GetSubscriberInfoBySubscriberId',
+            data: { SubId: idValue },
+            success: function(res) {
+                $('#subscriberName').val(res[0].name);
+                $('#subscriberCity').val(res[0].city);
+                $('#subscriberArea').val(res[0].area);
+                $('#subscriberMob').val(res[0].mobile);
+
+                console.log(res)
+            }
+        })
+    });
+</script>
+}
+

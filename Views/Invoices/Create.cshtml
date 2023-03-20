@@ -1,0 +1,277 @@
+﻿@model NWC.DAL.Entity.Invoices
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Invoice</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label">Invoice Id</label>
+                <input id="invoiceId" disabled asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label">Date</label>
+                <input type="date" asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="From" class="control-label">From</label>
+                <input onchange="handleDateSelect()" id="dateFrom" type="date" asp-for="From" class="form-control" />
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="To" class="control-label">To</label>
+                <input readonly id="dateTo" type="date" asp-for="To" class="form-control" />
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubscriptionId" class="control-label">Subscription Id</label>
+                <input id="subscriptionId" asp-for="SubscriptionId" class="form-control" />
+                <span asp-validation-for="SubscriptionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subscription.Subscriber.Id" class="control-label">Subscriber Id</label>
+                <input id="subscriberId" readonly asp-for="Subscription.Subscriber.Id" class="form-control" />
+                <span asp-validation-for="Subscription.Subscriber.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subscription.Subscriber.Name" class="control-label">Subscriber Name</label>
+                <input id="subscriberName" readonly asp-for="Subscription.Subscriber.Name" class="form-control" />
+                <span asp-validation-for="Subscription.Subscriber.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PreviousConsumptionAmount" class="control-label">Previous Consumption Amount</label>
+                <input id="lastReading" readonly asp-for="PreviousConsumptionAmount" class="form-control" />
+                <span asp-validation-for="PreviousConsumptionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentConsumptionAmount" class="control-label">Current Consumption Amount</label>
+                <input id="currentCons" asp-for="CurrentConsumptionAmount" class="form-control" />
+                <span asp-validation-for="CurrentConsumptionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActualConsumptionAmount" class="control-label">Actual Consumption Amount</label>
+                <input id="actualCons" readonly asp-for="ActualConsumptionAmount" class="form-control" />
+                <span asp-validation-for="ActualConsumptionAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="isThereSanitation" onclick="    return false;" asp-for="IsThereSanitation" />
+                <label asp-for="IsThereSanitation" class="control-label">Is There Sanitation</label>
+                <span asp-validation-for="IsThereSanitation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subscription.Unit_No" class="control-label">Unit No.</label>
+                <input id="unitNum" readonly asp-for="Subscription.Unit_No" class="form-control" />
+                <span asp-validation-for="Subscription.Unit_No" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceFee" class="control-label">Service Fee</label>
+                <input id="serviceFee" asp-for="ServiceFee" class="form-control" />
+                <span asp-validation-for="ServiceFee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxRate" class="control-label">Tax Rate</label>
+                <input id="taxRate" asp-for="TaxRate" class="form-control" />
+                <span asp-validation-for="TaxRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConsumptionValue" class="control-label">Water Consumption Value</label>
+                <input id="consumVal" readonly asp-for="ConsumptionValue" class="form-control" />
+                <span asp-validation-for="ConsumptionValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SanitationConsumptionValue" class="control-label">Sanitation Consumption Value</label>
+                <input id="sanitConsumVal" readonly asp-for="SanitationConsumptionValue" class="form-control" />
+                <span asp-validation-for="SanitationConsumptionValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalInvoice" class="control-label">Total Invoice</label>
+                <input id="totalInvoice" readonly asp-for="TotalInvoice" class="form-control" />
+                <span asp-validation-for="TotalInvoice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxValue" class="control-label">Tax Value</label>
+                <input id="taxVal" readonly asp-for="TaxValue" class="form-control" />
+                <span asp-validation-for="TaxValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalBill" class="control-label">Total Bill</label>
+                <input id="totalBill" readonly asp-for="TotalBill" class="form-control" />
+                <span asp-validation-for="TotalBill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label">Notes</label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Report">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+        <script>
+
+    const handleCounter = () => {
+        if (localStorage.getItem('counter')) {
+            var counter = localStorage.getItem('counter');
+            return counter++;
+        } else {
+            localStorage.setItem('counter', 1);
+            var counter = localStorage.getItem('counter');
+            return counter;
+        }
+    }
+
+        const handleIdFragFromDate = () => {
+            const date = new Date();
+            const fragmentID = date.slice(0, 7);
+            const currentCount = handleCounter();
+            $('#invoiceId').val(fragmentID + '-' + currentCount);
+        }
+
+        const handleDateFormat = (date) => {
+
+            if (date.toString().length === 1) {
+                return '0' + date.toString();
+            } else {
+                return date.toString();
+            }
+        }
+
+        const handleDateSelect = () => {
+            const dateFromVal = document.getElementById('dateFrom').value;
+            const month = parseInt(dateFromVal.slice(5, 7));
+            const year = parseInt( dateFromVal.slice(0, 4));
+            const day = parseInt(dateFromVal.slice(8, 10));
+
+
+
+            if (month == 12) {
+                const fulldate = '' + (year + 1) + '-' + (handleDateFormat(1)) + '-' + handleDateFormat(day);
+                document.getElementById('dateTo').value = fulldate
+            } else {
+                const fulldate = '' + year + '-' + handleDateFormat((month + 1)) + '-' + handleDateFormat(day);
+                document.getElementById('dateTo').value = fulldate
+            }
+        }
+
+    $('#subscriptionId').change(function() {
+        const idValue = $('#subscriptionId').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Invoices/GetSubscriptionInfoBySubscriptionId',
+            data: { SubsId: idValue },
+            success: function(res) {
+                $('#subscriberId').val(res[0].subscriberId);
+                $('#lastReading').val(res[0].last_Reading_Meter);
+                $('#isThereSanitation').prop("checked", res[0].isThereSanitation);
+                $('#unitNum').val(res[0].unit_No);
+                const subscriberId = res[0].subscriberId
+                $.ajax({
+                    type: 'POST',
+                    url: '/Invoices/GetSubscriberInfoBySubscriberId',
+                    data: { SubId: subscriberId },
+                    success: function(res) {
+                        $('#subscriberName').val(res[0].name);
+
+                        console.log(res)
+                    }
+                })
+            }
+        });
+    });
+
+    $('#currentCons').change(() => {
+        const currentCons =parseInt($('#currentCons').val()) ;
+        const lastReading = parseInt($('#lastReading').val());
+        if (currentCons >= lastReading) {
+            document.getElementById("actualCons").value = parseInt(currentCons) - parseInt(lastReading);
+            const actualConsVal = currentCons - lastReading;
+            let result = 0;
+            const unitNum= parseInt($('#unitNum').val())
+            if (actualConsVal > 60) {
+                const change = actualConsVal - 60
+                result = (15 * 0.1) + (15) + (15 * 3) + (15 * 4) + (change * 6);
+            } else if (actualConsVal <= 60 && actualConsVal > 45) {
+                const change = actualConsVal - 45
+                result = (15 * 0.1) + (15) + (15 * 3) + (change * 4);
+            } else if (actualConsVal <= 45 && actualConsVal > 30) {
+                const change = actualConsVal - 30
+                result = (15 * 0.1) + (15) + (change * 3);
+            } else if (actualConsVal <= 30 && actualConsVal > 15) {
+                const change = actualConsVal - 15
+                result = (15 * 0.1) + change;
+            } else if (actualConsVal <= 15 && actualConsVal > 0) {
+                result = actualConsVal * 0.1
+            } 
+
+
+            if ($('#isThereSanitation').is(':checked')) {
+                $('#sanitConsumVal').val((unitNum * result * 0.5).toFixed(2));
+            }   
+            else{
+                 $('#sanitConsumVal').val(0)
+            }
+
+            $('#consumVal').val((unitNum * result).toFixed(2));
+
+            $('#totalInvoice').val((parseFloat($('#consumVal').val()) + parseFloat($('#sanitConsumVal').val())).toFixed(2));
+
+        } 
+    });
+
+    $('#taxRate').change(() => {
+        $('#taxVal').val(((parseFloat($('#totalInvoice').val()) * parseFloat($('#taxRate').val())) / 100).toFixed(2));
+    })
+
+    $('#taxRate').change(() => {
+        if ($('#totalInvoice').val() !== '' && $('#taxVal').val() !== '' && $('#serviceFee').val() !== '') {
+            $('#totalBill').val(parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val()));
+        }
+    })
+
+    $('#currentCons').change(() => {
+        if ($('#totalInvoice').val() !== '' && $('#taxVal').val() !== '' && $('#serviceFee').val() !== '') {
+            $('#totalBill').val(parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val()));
+        }
+    })
+
+    $('#serviceFee').change(() => {
+        if ($('#totalInvoice').val() !== '' && $('#taxVal').val() !== '' && $('#serviceFee').val() !== '') {
+            $('#totalBill').val(parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val()));
+        }
+    })
+
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url:'/Invoices/GetLastID',
+            success: function(res) {
+            $("#invoiceId").val(res)
+            }
+        })
+    });
+    </script>
+}
