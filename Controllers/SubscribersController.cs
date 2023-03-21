@@ -67,7 +67,7 @@ namespace NWC.PL.Controllers
         }
 
         // GET: Subscriber/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace NWC.PL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Subscriber Subscriber)
+        public async Task<IActionResult> Edit(string id, Subscriber Subscriber)
         {
             if (id != Subscriber.Id)
             {
@@ -100,7 +100,7 @@ namespace NWC.PL.Controllers
                     SubscriberRepository.Update(Subscriber);
                     await SubscriberRepository.Save();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!SubscriberExists(Subscriber.Id))
                     {
@@ -108,6 +108,7 @@ namespace NWC.PL.Controllers
                     }
                     else
                     {
+                        //todo: logg ex 
                         throw;
                     }
                 }
@@ -117,7 +118,7 @@ namespace NWC.PL.Controllers
         }
 
         // GET: Subscriber/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var Subscriber = await SubscriberRepository.GetById(id);
             if (Subscriber == null)
@@ -131,7 +132,7 @@ namespace NWC.PL.Controllers
         // POST: Subscriber/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string  id)
         {
             var Subscriber = await SubscriberRepository.GetById(id);
             SubscriberRepository.Delete(Subscriber);
@@ -139,7 +140,7 @@ namespace NWC.PL.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubscriberExists(int id)
+        private bool SubscriberExists(string id)
         {
             return _context.Subscriber.Any(e => e.Id == id);
         }
