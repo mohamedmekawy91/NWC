@@ -64,34 +64,49 @@ namespace NWC.PL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RealEstateTypesId,SubscriberId,Unit_No,IsThereSanitation,Last_Reading_Meter,Notes")] Subscription subscription)
+        public async Task<IActionResult> Create( Subscription subscription)
         {
-            if (ModelState.IsValid)
+            try
             {
-                string date = DateTime.Now.ToString("MM-yy");
-                
-                var lastsubscription = await _context.Subscription.OrderBy(x => x.Date).LastOrDefaultAsync();
-               if (lastsubscription == null)
+                if (ModelState.IsValid)
                 {
-                    subscription.Id = $"{1}-{date}";
-                    _context.Add(subscription);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Report));
-                }
-                else
-                {
-                    string lastId = lastsubscription.Id.Substring(0, lastsubscription.Id.IndexOf('-'));
-                    var lastids = int.Parse(lastId) + 1;
-                     subscription.Id = $"{lastids}-{date}";
-                    _context.Add(subscription);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Report));
+                    var result = _context.Subscriber.FindAsync(subscription.SubscriberId);
+                    if (result.IsCompletedSuccessfully)
+                    {
+                        string date = DateTime.Now.ToString("MM-yy");
 
+                        var lastsubscription = await _context.Subscription.OrderBy(x => x.Date).LastOrDefaultAsync();
+                        if (lastsubscription == null)
+                        {
+                            subscription.Id = $"{1}-{date}";
+                            _context.Add(subscription);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Report));
+                        }
+                        else
+                        {
+                            string lastId = lastsubscription.Id.Substring(0, lastsubscription.Id.IndexOf('-'));
+                            var lastids = int.Parse(lastId) + 1;
+                            subscription.Id = $"{lastids}-{date}";
+                            _context.Add(subscription);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Report));
+
+                        }
+                    }
+
+                        ModelState.AddModelError("","Subscriber ID Isn't correct");
                 }
+                var RealStateModel = _context.RealEstateTypes.ToList();
+                ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
+                return View();
             }
-            var RealStateModel = _context.RealEstateTypes.ToList();
-            ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
-            return View();
+            catch (Exception)
+            {
+
+                return View();
+            }
+            
         }
 
         // GET: Subscriptions/Edit/5
@@ -118,34 +133,43 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,RealEstateTypes,Subscriber,Unit_No,IsThereSanitation,Last_Reading_Meter,Notes")] Subscription subscription)
         {
-            if (id != subscription.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != subscription.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(subscription);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SubscriptionExists(subscription.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(subscription);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!SubscriptionExists(subscription.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    var RealStateModel = await _context.RealEstateTypes.ToListAsync();
+                    ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
+                    return RedirectToAction(nameof(Index));
                 }
-                var RealStateModel = await _context.RealEstateTypes.ToListAsync();
-                ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
-                return RedirectToAction(nameof(Index));
+                return View(subscription);
             }
-            return View(subscription);
+            catch (Exception)
+            {
+
+                return View(subscription);
+            }
+            
         }
 
         // GET: Subscriptions/Delete/5
@@ -172,15 +196,23 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var subscription = await _context.Subscription.FindAsync(id);
-            _context.Subscription.Remove(subscription);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var subscription = await _context.Subscription.FindAsync(id);
+                _context.Subscription.Remove(subscription);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+
+                return View();
+            }
+            
         }
 
-        public JsonResult GetSubscriberInfoBySubscriberId(int SubId)
+        public JsonResult GetSubscriberInfoBySubscriberId(string SubId)
         {
-
             var model = subscriber.Get(a => a.Id == SubId);
             return Json(model);
         }

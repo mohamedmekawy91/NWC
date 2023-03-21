@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NWC.BL\NWC.BL.csproj" />
-    <ProjectReference Include="..\NWC.DALs\NWC.DAL.csproj" />
   </ItemGroup>
 
 </Project>

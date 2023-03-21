@@ -248,19 +248,19 @@
 
     $('#taxRate').change(() => {
         if ($('#totalInvoice').val() !== '' && $('#taxVal').val() !== '' && $('#serviceFee').val() !== '') {
-            $('#totalBill').val(parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val()));
+            $('#totalBill').val((parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val())).toFixed(2));
         }
     })
 
     $('#currentCons').change(() => {
         if ($('#totalInvoice').val() !== '' && $('#taxVal').val() !== '' && $('#serviceFee').val() !== '') {
-            $('#totalBill').val(parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val()));
+            $('#totalBill').val((parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val())).toFixed(2));
         }
     })
 
     $('#serviceFee').change(() => {
         if ($('#totalInvoice').val() !== '' && $('#taxVal').val() !== '' && $('#serviceFee').val() !== '') {
-            $('#totalBill').val(parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val()));
+            $('#totalBill').val((parseFloat($('#totalInvoice').val()) + parseFloat($('#taxVal').val()) + parseFloat($('#serviceFee').val())).toFixed(2));
         }
     })
 

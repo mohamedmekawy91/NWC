@@ -40,6 +40,11 @@ namespace NWC.PL.Controllers
             string date = DateTime.Now.ToString("MM-yyyy");
 
             var lastInvoice = await _context.Invoices.OrderBy(x => x.Year).LastOrDefaultAsync();
+            if (lastInvoice == null)
+            {
+                var invoiceId = $"{1}-{date}";
+                return Json(invoiceId);
+            }
             var lastId = lastInvoice.Id.Substring(0, lastInvoice.Id.IndexOf('-'));
             var lastids = int.Parse(lastId) + 1;
             var invoicesId = $"{lastids}-{date}";
@@ -87,32 +92,44 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Year,Date,From,To,SubscriptionId,SubscriptionSubscriberId,Subscription.Subscriber.Name,Subscription.Last_Reading_Meter,PreviousConsumptionAmount,CurrentConsumptionAmount,ActualConsumptionAmount,ServiceFee,TaxRate,IsThereSanitation,Subscription.IsThereSanitation,Subscription.Unit_No,ConsumptionValue,SanitationConsumptionValue,TotalInvoice,TaxValue,TotalBill,Notes")] Invoices invoices)
         {
-            if (ModelState.IsValid)
+            try
             {
-                string date = DateTime.Now.ToString("MM-yyyy");
-
-                var lastInvoice = await _context.Invoices.OrderBy(x => x.Year).LastOrDefaultAsync();
-                if (lastInvoice == null)
+                if (ModelState.IsValid)
                 {
-                    invoices.Id = $"{1}-{date}";
-;
-                    _context.Add(invoices);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Report));
-                }
-                else
-                {
-                    string lastId = lastInvoice.Id.Substring(0, lastInvoice.Id.IndexOf('-'));
-                    var lastids = int.Parse(lastId) + 1;
-                    invoices.Id = $"{lastids}-{date}";
+                    string date = DateTime.Now.ToString("MM-yyyy");
 
-                    _context.Add(invoices);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Report));
+                    var lastInvoice = await _context.Invoices.OrderBy(x => x.Year).LastOrDefaultAsync();
+                    var subs = await _context.Subscription.FirstOrDefaultAsync(m => m.Id == invoices.SubscriptionId);
+                    if (lastInvoice == null)
+                    {
+                        invoices.Id = $"{1}-{date}";
+                        subs.Last_Reading_Meter = invoices.CurrentConsumptionAmount;
+                        _context.Add(invoices);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Report));
+                    }
+                    else
+                    {
+                        string lastId = lastInvoice.Id.Substring(0, lastInvoice.Id.IndexOf('-'));
+                        var lastids = int.Parse(lastId) + 1;
+                        invoices.Id = $"{lastids}-{date}";
 
+                        invoices.PreviousConsumptionAmount = subs.Last_Reading_Meter;
+                        subs.Last_Reading_Meter = invoices.CurrentConsumptionAmount;
+                        _context.Add(invoices);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Report));
+
+                    }
                 }
-              }
-            return View(invoices);
+                return View(invoices);
+            }
+            catch (Exception)
+            {
+
+                return View(invoices);
+            }
+
         }
 
         // GET: Invoices/Edit/5
@@ -138,32 +155,40 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Year,Date,From,To,PreviousConsumptionAmount,CurrentConsumptionAmount,ActualConsumptionAmount,ServiceFee,TaxRate,IsThereSanitation,ConsumptionValue,SanitationConsumptionValue,TotalInvoice,TaxValue,TotalBill,Notes")] Invoices invoices)
         {
-            if (id != invoices.Id)
+            try
             {
-                return NotFound();
+                if (id != invoices.Id)
+                {
+                    return NotFound();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(invoices);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!InvoicesExists(invoices.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Report));
+                }
+                return View(invoices);
+            }
+            catch (Exception)
+            {
+                return View(invoices);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(invoices);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InvoicesExists(invoices.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(invoices);
         }
 
         // GET: Invoices/Delete/5
@@ -187,12 +212,21 @@ namespace NWC.PL.Controllers
         // POST: Invoices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var invoices = await _context.Invoices.FindAsync(id);
-            _context.Invoices.Remove(invoices);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var invoices = await _context.Invoices.FindAsync(id);
+                _context.Invoices.Remove(invoices);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Report));
+            }
+            catch (Exception)
+            {
+
+                return View();
+            }
+
         }
 
         private bool InvoicesExists(string id)
@@ -207,13 +241,12 @@ namespace NWC.PL.Controllers
             var model = Subscription.Get(a => a.Id == SubsId);
             return Json(model);
         }
-        public JsonResult GetSubscriberInfoBySubscriberId(int SubId)
+        public JsonResult GetSubscriberInfoBySubscriberId(string SubId)
         {
-
             var model = subscriber.Get(a => a.Id == SubId);
             return Json(model);
         }
-         public JsonResult GetInvoiceInfoByInvoiceId(string Id)
+        public JsonResult GetInvoiceInfoByInvoiceId(string Id)
         {
 
             var model = Invoice.Get(a => a.Id == Id);

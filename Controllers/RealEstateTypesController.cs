@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NWC.DAL.Database;
 using NWC.DAL.Entity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NWC.PL.Controllers
 {
@@ -56,13 +54,22 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Notes")] RealEstateTypes realEstateTypes)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(realEstateTypes);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(realEstateTypes);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(realEstateTypes);
             }
-            return View(realEstateTypes);
+            catch (Exception)
+            {
+
+                return View(realEstateTypes);
+            }
+
         }
 
         // GET: RealEstateTypes/Edit/5
@@ -88,32 +95,41 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Notes")] RealEstateTypes realEstateTypes)
         {
-            if (id != realEstateTypes.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != realEstateTypes.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(realEstateTypes);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RealEstateTypesExists(realEstateTypes.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(realEstateTypes);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!RealEstateTypesExists(realEstateTypes.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                return View(realEstateTypes);
             }
-            return View(realEstateTypes);
+            catch (Exception)
+            {
+
+                return View(realEstateTypes);
+            }
+            
         }
 
         // GET: RealEstateTypes/Delete/5
@@ -139,13 +155,21 @@ namespace NWC.PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var realEstateTypes = await _context.RealEstateTypes.FindAsync(id);
-            _context.RealEstateTypes.Remove(realEstateTypes);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            try
+            {
+                var realEstateTypes = await _context.RealEstateTypes.FindAsync(id);
+                _context.RealEstateTypes.Remove(realEstateTypes);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
-        private bool RealEstateTypesExists(int id)
+            catch (Exception)
+            {
+
+                return RedirectToAction(nameof(Index));
+            }
+        }
+            private bool RealEstateTypesExists(int id)
         {
             return _context.RealEstateTypes.Any(e => e.Id == id);
         }
