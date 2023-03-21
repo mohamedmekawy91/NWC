@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NWC.BL.Interfaces;
+using NWC.BL.Repositories;
 using NWC.DAL.Database;
 using NWC.DAL.Entity;
 using System.Linq;
@@ -12,11 +13,14 @@ namespace NWC.PL.Controllers
     {
         private readonly NWCContext _context;
         private readonly IGenericRepository<Subscriber> SubscriberRepository;
-
-        public SubscribersController(NWCContext context, IGenericRepository<Subscriber> SubscriberRepository)
+        private readonly SubscriberRepository _subscriberRepository;
+        public SubscribersController(NWCContext context, 
+            IGenericRepository<Subscriber> SubscriberRepository,
+            SubscriberRepository subscriberRepository)
         {
             _context = context;
             this.SubscriberRepository = SubscriberRepository;
+            _subscriberRepository = subscriberRepository;
         }
 
         // GET: Subscriber
@@ -28,7 +32,7 @@ namespace NWC.PL.Controllers
         // GET: Subscriber Report
         public async Task<IActionResult> Report()
         {
-            var data = await SubscriberRepository.GetAll();
+            var data = await _subscriberRepository.GetInclude();
             return View(data);
         }
 

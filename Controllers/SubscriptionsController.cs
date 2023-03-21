@@ -70,8 +70,8 @@ namespace NWC.PL.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var result = _context.Subscriber.FindAsync(subscription.SubscriberId);
-                    if (result.IsCompletedSuccessfully)
+                    var result = await subscriber.GetById(subscription.SubscriberId);
+                    if (result != null)
                     {
                         string date = DateTime.Now.ToString("MM-yy");
 
