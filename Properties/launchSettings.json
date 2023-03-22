@@ -5,14 +5,18 @@
     "iisExpress": {
       "applicationUrl": "http://localhost:65382",
       "sslPort": 0
-    }
+    },
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "Production"
+    },
+    "nativeDebugging": false
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "NWC": {
@@ -21,7 +25,7 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }

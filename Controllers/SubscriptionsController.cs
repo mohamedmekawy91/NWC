@@ -131,7 +131,7 @@ namespace NWC.PL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,RealEstateTypes,Subscriber,Unit_No,IsThereSanitation,Last_Reading_Meter,Notes")] Subscription subscription)
+        public async Task<IActionResult> Edit(string id, Subscription subscription)
         {
             try
             {
@@ -162,12 +162,13 @@ namespace NWC.PL.Controllers
                     ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
                     return RedirectToAction(nameof(Index));
                 }
+               // ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
                 return View(subscription);
             }
             catch (Exception)
             {
-
-                return View(subscription);
+                //ViewBag.RealStateList = new SelectList(RealStateModel, "Id", "Name");
+                return View();
             }
             
         }

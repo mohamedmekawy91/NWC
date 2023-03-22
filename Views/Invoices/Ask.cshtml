@@ -9,109 +9,185 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label">ID</label>
-                <input id="invoiceId"  asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+            <div class="row">
+                <div class="col-4">    
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label">ID</label>
+                        <input id="invoiceId"  asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-2 "></div> 
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Date" class="control-label">Date</label>
+                        <input id="date" type="date" disabled asp-for="Date" class="form-control" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label">Date</label>
-                <input id="date" type="date" disabled asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+        
+            <div class="row">
+                <div class="col-4">    
+                    <div class="form-group">
+                        <label asp-for="From" class="control-label">From</label>
+                        <input id="dateFrom" type="date" disabled asp-for="From" class="form-control" />
+                        <span asp-validation-for="From" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-2 "></div> 
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="To" class="control-label">To</label>
+                        <input disabled id="dateTo" type="date" asp-for="To" class="form-control" />
+                        <span asp-validation-for="To" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="From" class="control-label">From</label>
-                <input disabled id="dateFrom" type="date" asp-for="From" class="form-control" />
-                <span asp-validation-for="From" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                    <label asp-for="SubscriptionId" class="control-label">Subscription Id</label>
+                    <input  disabled id="subscriptionId" asp-for="SubscriptionId" class="form-control" />
+                    <span asp-validation-for="SubscriptionId" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="To" class="control-label">To</label>
-                <input disabled id="dateTo" type="date" asp-for="To" class="form-control" />
-                <span asp-validation-for="To" class="text-danger"></span>
+            
+             <div class="row">
+                <div class="col-4">    
+                    <div class="form-group">
+                        <label asp-for="Subscription.Subscriber.Id" class="control-label">Subscriber Id</label>
+                        <input  id="subscriberId" disabled asp-for="Subscription.Subscriber.Id" class="form-control" />
+                        <span asp-validation-for="Subscription.Subscriber.Id" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-2 "></div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Subscription.Subscriber.Name" class="control-label">Subscriber Name</label>
+                        <input id="subscriberName" disabled asp-for="Subscription.Subscriber.Name" class="form-control" />
+                        <span asp-validation-for="Subscription.Subscriber.Name" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SubscriptionId" class="control-label">Subscription Id</label>
-                <input  disabled id="subscriptionId" asp-for="SubscriptionId" class="form-control" />
-                <span asp-validation-for="SubscriptionId" class="text-danger"></span>
+
+             <div class="row">
+                <div class="col-4">    
+                    <div class="form-group">
+                        <label asp-for="PreviousConsumptionAmount" class="control-label">Previous Consumption Amount</label>
+                        <input id="lastReading" disabled asp-for="PreviousConsumptionAmount" class="form-control" />
+                        <span asp-validation-for="PreviousConsumptionAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-2 "></div> 
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="CurrentConsumptionAmount" class="control-label">Current Consumption Amount</label>
+                        <input disabled id="currentCons" asp-for="CurrentConsumptionAmount" class="form-control" />
+                        <span asp-validation-for="CurrentConsumptionAmount" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Subscription.Subscriber.Id" class="control-label">Subscriber Id</label>
-                <input  id="subscriberId" disabled asp-for="Subscription.Subscriber.Id" class="form-control" />
-                <span asp-validation-for="Subscription.Subscriber.Id" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                    <label asp-for="ActualConsumptionAmount" class="control-label">Actual Consumption Amount</label>
+                    <input id="actualCons" disabled asp-for="ActualConsumptionAmount" class="form-control" />
+                    <span asp-validation-for="ActualConsumptionAmount" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Subscription.Subscriber.Name" class="control-label">Subscriber Name</label>
-                <input id="subscriberName" disabled asp-for="Subscription.Subscriber.Name" class="form-control" />
-                <span asp-validation-for="Subscription.Subscriber.Name" class="text-danger"></span>
+
+             <div class="row">
+                <div class="col-4">    
+                    <div class="form-group">
+                        <input id="isThereSanitation" disabled asp-for="IsThereSanitation"  />
+                        <label asp-for="IsThereSanitation" class="control-label">Is There Sanitation</label>
+                        <span asp-validation-for="IsThereSanitation" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-2 "></div> 
+                <div class="col-4">
+                    <div class="form-group">
+                        <label asp-for="Subscription.Unit_No" class="control-label">Unit No.</label>
+                        <input id="unitNum" disabled asp-for="Subscription.Unit_No" class="form-control" />
+                        <span asp-validation-for="Subscription.Unit_No" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PreviousConsumptionAmount" class="control-label">Previous Consumption Amount</label>
-                <input id="lastReading" disabled asp-for="PreviousConsumptionAmount" class="form-control" />
-                <span asp-validation-for="PreviousConsumptionAmount" class="text-danger"></span>
+
+             <div class="row">
+                <div class="col-2">    
+                    <div class="form-group">
+                        <label asp-for="ServiceFee" class="control-label">Service Fee</label>
+                        <input disabled id="serviceFee" asp-for="ServiceFee" class="form-control" />
+                        <span asp-validation-for="ServiceFee" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4 "></div> 
+                <div class="col-2">
+                    <div class="form-group">
+                        <label asp-for="TaxRate" class="control-label">Tax Rate</label>
+                        <input disabled id="taxRate" asp-for="TaxRate" class="form-control" />
+                        <span asp-validation-for="TaxRate" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CurrentConsumptionAmount" class="control-label">Current Consumption Amount</label>
-                <input disabled id="currentCons" asp-for="CurrentConsumptionAmount" class="form-control" />
-                <span asp-validation-for="CurrentConsumptionAmount" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-2">    
+                     <div class="form-group">
+                        <label asp-for="ConsumptionValue" class="control-label">Water Consumption Value</label>
+                        <input id="consumVal" disabled asp-for="ConsumptionValue" class="form-control" />
+                        <span asp-validation-for="ConsumptionValue" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4 "></div> 
+                <div class="col-2">
+                    <div class="form-group">
+                        <label asp-for="SanitationConsumptionValue" class="control-label">Sanitation Consumption Value</label>
+                        <input id="sanitConsumVal" disabled asp-for="SanitationConsumptionValue" class="form-control" />
+                        <span asp-validation-for="SanitationConsumptionValue" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ActualConsumptionAmount" class="control-label">Actual Consumption Amount</label>
-                <input id="actualCons" disabled asp-for="ActualConsumptionAmount" class="form-control" />
-                <span asp-validation-for="ActualConsumptionAmount" class="text-danger"></span>
+
+             <div class="row">
+                <div class="col-2">    
+                    <div class="form-group">
+                        <label asp-for="TotalInvoice" class="control-label">Total Invoice</label>
+                        <input id="totalInvoice" disabled asp-for="TotalInvoice" class="form-control" />
+                        <span asp-validation-for="TotalInvoice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-4 "></div> 
+                <div class="col-2">
+                    <div class="form-group">
+                        <label asp-for="TotalBill" class="control-label">Total Bill</label>
+                        <input id="totalBill" disabled asp-for="TotalBill" class="form-control" />
+                        <span asp-validation-for="TotalBill" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <input id="isThereSanitation" disabled asp-for="IsThereSanitation"  />
-                <label asp-for="IsThereSanitation" class="control-label">Is There Sanitation</label>
-                <span asp-validation-for="IsThereSanitation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Subscription.Unit_No" class="control-label">Unit No.</label>
-                <input id="unitNum" disabled asp-for="Subscription.Unit_No" class="form-control" />
-                <span asp-validation-for="Subscription.Unit_No" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceFee" class="control-label">Service Fee</label>
-                <input disabled id="serviceFee" asp-for="ServiceFee" class="form-control" />
-                <span asp-validation-for="ServiceFee" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TaxRate" class="control-label">Tax Rate</label>
-                <input disabled id="taxRate" asp-for="TaxRate" class="form-control" />
-                <span asp-validation-for="TaxRate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConsumptionValue" class="control-label">Water Consumption Value</label>
-                <input id="consumVal" disabled asp-for="ConsumptionValue" class="form-control" />
-                <span asp-validation-for="ConsumptionValue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SanitationConsumptionValue" class="control-label">Sanitation Consumption Value</label>
-                <input id="sanitConsumVal" disabled asp-for="SanitationConsumptionValue" class="form-control" />
-                <span asp-validation-for="SanitationConsumptionValue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalInvoice" class="control-label">Total Invoice</label>
-                <input id="totalInvoice" disabled asp-for="TotalInvoice" class="form-control" />
-                <span asp-validation-for="TotalInvoice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+
+
+          @*  <div class="form-group">
                 <label asp-for="TaxValue" class="control-label">Tax Value</label>
                 <input id="taxVal" disabled asp-for="TaxValue" class="form-control" />
                 <span asp-validation-for="TaxValue" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TotalBill" class="control-label">Total Bill</label>
-                <input id="totalBill" disabled asp-for="TotalBill" class="form-control" />
-                <span asp-validation-for="TotalBill" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Notes" class="control-label">Notes</label>
                 <input id="notes" disabled asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
+            </div>*@
         </form>
     </div>
 </div>
@@ -146,9 +222,9 @@ $('#invoiceId').change(function() {
             $('#consumVal').val(res[0].consumptionValue);
             $('#sanitConsumVal').val(res[0].sanitationConsumptionValue);
             $('#totalInvoice').val(res[0].totalInvoice);
-            $('#taxVal').val(res[0].taxValue);
+           // $('#taxVal').val(res[0].taxValue);
             $('#totalBill').val(res[0].totalBill);
-            $('#notes').val(res[0].notes);
+            //$('#notes').val(res[0].notes);
 
             const subscriptionId = $('#subscriptionId').val();
             $.ajax({
