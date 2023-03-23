@@ -81,7 +81,7 @@ namespace NWC.PL.Controllers
                             subscription.Id = $"{1}-{date}";
                             _context.Add(subscription);
                             await _context.SaveChangesAsync();
-                            return RedirectToAction(nameof(Report));
+                            return RedirectToAction(nameof(Index));
                         }
                         else
                         {
@@ -90,7 +90,7 @@ namespace NWC.PL.Controllers
                             subscription.Id = $"{lastids}-{date}";
                             _context.Add(subscription);
                             await _context.SaveChangesAsync();
-                            return RedirectToAction(nameof(Report));
+                            return RedirectToAction(nameof(Index));
 
                         }
                     }
